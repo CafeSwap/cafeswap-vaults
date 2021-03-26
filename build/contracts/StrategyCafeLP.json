@@ -29437,7 +29437,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-03-09T14:29:14.575Z",
+  "updatedAt": "2021-03-26T15:50:41.291Z",
   "devdoc": {
     "details": "Implementation of a strategy to get yields from farming LP Pools in CafeSwap. This strat is currently compatible with all LP pools.",
     "events": {

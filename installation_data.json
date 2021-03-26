@@ -1,0 +1,21 @@
+{
+  "private_key": {
+    "alice": ""
+  },
+  "public_key": {
+    "alice": ""
+  },
+  "vault_token_name": "CAFE Vault",
+  "vault_token_symbol": "CVL",
+  "approval_delay": 86400,
+  "pool_id": 14,
+  "contract_address": {
+    "token_address": "0x4D1f8F8E579096097809D439d6707f2F5870652A",
+    "lp_pair": "0x4D1f8F8E579096097809D439d6707f2F5870652A",
+    "vault": "",
+    "strategy": ""
+  },
+  "provider": {
+    "rpc_endpoint": "https://bsc-dataseed1.defibit.io/"
+  }
+}

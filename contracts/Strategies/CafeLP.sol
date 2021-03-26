@@ -43,11 +43,11 @@ contract StrategyCafeLP is Ownable, Pausable {
 
     /**
      * @dev Third Party Contracts:
-     * {unirouter} - PancakeSwap unirouter
+     * {unirouter} - CafeSwap unirouter
      * {masterchef} - MasterChef contract
      * {poolId} - MasterChef pool id
      */
-    address constant public unirouter  = address(0x05fF2B0DB69458A0750badebc4f9e13aDd608C7F);
+    address constant public unirouter  = address(0x933DAea3a5995Fb94b14A7696a5F3ffD7B1E385A);
     address constant public masterchef = address(0xc772955c33088a97D56d0BBf473d05267bC4feBB);
     uint8 public poolId;
 

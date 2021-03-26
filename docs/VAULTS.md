@@ -1,0 +1,6 @@
+# List of Vaults
+
+## BREW_WBNB LP start
+
+LP_PAIR: `0x4D1f8F8E579096097809D439d6707f2F5870652A`
+MasterChef Pool ID: `14`
