@@ -184,8 +184,9 @@ contract CoffeeVault is ERC20, Ownable {
         require(stratCandidate.proposedTime.add(approvalDelay) < block.timestamp, "Delay has not passed");
         
         emit UpgradeStrat(stratCandidate.implementation);
-
-        IStrategy(strategy).retireStrat();
+        if (strategy != address(0)){
+          IStrategy(strategy).retireStrat();
+        }
         strategy = stratCandidate.implementation;
         stratCandidate.implementation = address(0);
         stratCandidate.proposedTime = 5000000000;
