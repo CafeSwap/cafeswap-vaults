@@ -10,7 +10,7 @@
   "approval_delay": 86400,
   "pool_id": 14,
   "contract_address": {
-    "burner_address": "",
+    "burner_address": "0x000000000000000000000000000000000000dEaD",
     "token_address": "0x4D1f8F8E579096097809D439d6707f2F5870652A",
     "lp_pair": "0x4D1f8F8E579096097809D439d6707f2F5870652A",
     "vault": "",
