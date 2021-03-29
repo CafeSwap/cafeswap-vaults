@@ -37,6 +37,7 @@ contract StrategyCafeLP is Ownable, Pausable {
     address constant public busd = address(0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56);
     address constant public rewardToken = address(0x790Be81C3cA0e53974bE2688cDb954732C9862e1);
     address constant public brew = address(0x790Be81C3cA0e53974bE2688cDb954732C9862e1);
+    address public burnerAddress;
     address public lpPair;
     address public lpToken0;
     address public lpToken1;
@@ -99,13 +100,14 @@ contract StrategyCafeLP is Ownable, Pausable {
     /**
      * @dev Initializes the strategy with the token to maximize.
      */
-    constructor(address _lpPair, uint8 _poolId, address _vault, address _strategist) public {
+    constructor(address _lpPair, uint8 _poolId, address _vault, address _strategist, address _burnerAddress) public {
         lpPair = _lpPair;
         lpToken0 = IUniswapV2Pair(lpPair).token0();
         lpToken1 = IUniswapV2Pair(lpPair).token1();
         poolId = _poolId;
         vault = _vault;
         strategist = _strategist;
+        burnerAddress = _burnerAddress;
 
         if (lpToken0 == wbnb) {
             rewardTokenToLp0Route = [rewardToken, wbnb];
@@ -213,7 +215,7 @@ contract StrategyCafeLP is Ownable, Pausable {
           burnFee,
           0,
           wbnbToBrewRoute,
-          address(0),
+          burnerAddress,
           now.add(600));
 
         uint256 strategistFee = wbnbBal.mul(STRATEGIST_FEE).div(MAX_FEE);

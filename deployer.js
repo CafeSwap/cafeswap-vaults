@@ -76,7 +76,8 @@ var URL = "";
                                   data_object.contract_address.lp_pair,
                                   data_object.pool_id,
                                   data_object.contract_address.vault,
-                                  accounts[0]
+                                  accounts[0],
+                                  data_object.contract_address.burner_address,
                                 ]})
                               .send({
                                 from: accounts[0],
