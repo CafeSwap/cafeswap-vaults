@@ -193,4 +193,15 @@ contract CoffeeVault is ERC20, Ownable {
         
         earn();
     }
+
+    /**
+     * @dev Rescues random funds stuck that the strat can't handle.
+     * @param _token address of the token to rescue.
+     */
+    function inCaseTokensGetStuck(address _token) external onlyOwner {
+        require(_token != address(token), "!token");
+
+        uint256 amount = IERC20(_token).balanceOf(address(this));
+        IERC20(_token).safeTransfer(msg.sender, amount);
+    }
 }
