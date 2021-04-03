@@ -28,7 +28,8 @@ contract StrategyReward is Ownable, Pausable {
      * {rewardToken} - Token that the strategy maximizes. The same token that users deposit in the vault.
      */
     address constant public wbnb = address(0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c);
-    address constant public rewardToken = address(0x790Be81C3cA0e53974bE2688cDb954732C9862e1);
+    address constant public rewardToken = address();
+    address constant public brew = address(0x790Be81C3cA0e53974bE2688cDb954732C9862e1);
     address public burnerAddress;
 
     /**
@@ -71,9 +72,11 @@ contract StrategyReward is Ownable, Pausable {
      * @dev Routes we take to swap tokens using CafeSwap.
      * {rewardTokenToWbnbRoute} - Route we take to go from {rewardToken} into {wbnb}.
      * {wbnbToRewardTokenRoute} - Route we take to go from {wbnb} into {rewardToken}.
+     * {wbnbToBrew} - Route we take to go from {wbnb} into {rewardToken}.
      */
     address[] public rewardTokenToWbnbRoute = [rewardToken, wbnb];
     address[] public wbnbToRewardTokenRoute = [wbnb, rewardToken];
+    address[] public wbnbToBrew = [wbnb, brew];
 
     /**
      * @dev Event that is fired each time someone harvests the strat.
@@ -96,6 +99,7 @@ contract StrategyReward is Ownable, Pausable {
 
         IERC20(rewardToken).safeApprove(masterchef, uint(-1));
         IERC20(rewardToken).safeApprove(unirouter, uint(-1));
+        IERC20(brew).safeApprove(unirouter, uint(-1));
         IERC20(wbnb).safeApprove(unirouter, uint(-1));
     }
 
@@ -176,7 +180,7 @@ contract StrategyReward is Ownable, Pausable {
         IUniswapRouterETH(unirouter).swapExactTokensForTokens(
           burnFee,
           0,
-          wbnbToRewardTokenRoute,
+          wbnbToBrew,
           burnerAddress,
           now.add(600));
 
