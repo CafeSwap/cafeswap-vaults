@@ -52,7 +52,7 @@ contract StrategyBrew is Ownable, Pausable {
      * @dev Distribution of fees earned. This allocations relative to the % implemented on doSplit().
      * Current implementation separates 2.5% for fees.
      *
-     * {BURN_FEE} - 1.5% goes to buying BREW and burning it.
+     * {BURN_FEE} - 2.5% goes to buying BREW and burning it.
      * {CALL_FEE} - 0.5% goes to whoever executes the harvest function as gas subsidy.
      * {STRATEGIST_FEE} - 0.5% goes to the strategist.
      * {MAX_FEE} - Aux const used to safely calc the correct amounts.
@@ -60,9 +60,9 @@ contract StrategyBrew is Ownable, Pausable {
      * {WITHDRAWAL_FEE} - Fee taxed when a user withdraws funds. 10 === 0.1% fee.
      * {WITHDRAWAL_MAX} - Aux const used to safely calc the correct amounts.
      */
-    uint constant public BURN_FEE    = 600;
-    uint constant public CALL_FEE       = 200;
-    uint constant public STRATEGIST_FEE = 200;
+    uint constant public BURN_FEE    = 716;
+    uint constant public CALL_FEE       = 142;
+    uint constant public STRATEGIST_FEE = 142;
     uint constant public MAX_FEE        = 1000;
 
     uint constant public WITHDRAWAL_FEE = 10;
@@ -154,13 +154,13 @@ contract StrategyBrew is Ownable, Pausable {
     }
 
     /**
-     * @dev Takes out 2.5% as system fees from the rewards. 
+     * @dev Takes out 3.5% as system fees from the rewards. 
      * 0.5% -> Call Fee
      * 0.5% -> Strategist fee
-     * 1.5% -> BURN BREW
+     * 2.5% -> BURN BREW
      */
     function chargeFees() internal {
-        uint256 toWbnb = IERC20(brew).balanceOf(address(this)).mul(25).div(1000);
+        uint256 toWbnb = IERC20(brew).balanceOf(address(this)).mul(35).div(1000);
         IUniswapRouterETH(unirouter).swapExactTokensForTokens(
                   toWbnb,
                   0,
