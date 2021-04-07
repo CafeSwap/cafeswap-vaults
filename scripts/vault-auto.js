@@ -4,11 +4,11 @@ const Strategy = require('../build/contracts/StrategyCafeLP.json');
 const fromAddress = "";
 const vaultAddresses = [""];
 const privateKey = "";
-const chainID = 97;
+const chainID = 56;
 
 const web3 = new Web3(
   new Web3.providers.HttpProvider(
-    "https://data-seed-prebsc-1-s1.binance.org:8545"
+    "https://bsc-dataseed1.defibit.io/"
   )
 );
 
@@ -16,7 +16,6 @@ let strategyContract;
 
 const harvest = async (vaultAddress) => {
   strategyContract = new web3.eth.Contract(Strategy.abi, vaultAddress);
-
   const nonce = await web3.eth.getTransactionCount(fromAddress);
   const gasPriceWei = await web3.eth.getGasPrice();
   const data = strategyContract.methods.harvest().encodeABI()
