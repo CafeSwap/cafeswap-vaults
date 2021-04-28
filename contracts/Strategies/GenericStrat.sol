@@ -28,7 +28,7 @@ contract StrategyReward is Ownable, Pausable {
      * {rewardToken} - Token that the strategy maximizes. The same token that users deposit in the vault.
      */
     address constant public wbnb = address(0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c);
-    address constant public rewardToken = address();
+    address constant public rewardToken = address(0x790Be81C3cA0e53974bE2688cDb954732C9862e1);
     address constant public brew = address(0x790Be81C3cA0e53974bE2688cDb954732C9862e1);
     address public burnerAddress;
 
