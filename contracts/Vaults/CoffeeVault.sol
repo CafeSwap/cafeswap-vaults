@@ -163,10 +163,6 @@ contract CoffeeVault is ERC20, Ownable {
         uint256 r = (balance().mul(_shares)).div(totalSupply());
         _burn(msg.sender, _shares);
 
-        // store initla LP Tokens
-        UserInfo storage user = userInfo[msg.sender];
-        user.shareTokens = user.shareTokens.sub(_shares);
-
         uint b = token.balanceOf(address(this));
         if (b < r) {
             uint _withdraw = r.sub(b);
@@ -178,9 +174,9 @@ contract CoffeeVault is ERC20, Ownable {
             }
         }
 
-        if (user.initialLpTokens < _shares) {
-            user.initialLpTokens = 0;
-        }
+        UserInfo storage user = userInfo[msg.sender];
+        user.shareTokens = user.shareTokens.sub(_shares);
+        user.initialLpTokens = user.initialLpTokens.sub(r);
 
         token.safeTransfer(msg.sender, r);
     }
