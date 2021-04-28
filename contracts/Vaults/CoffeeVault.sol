@@ -176,7 +176,13 @@ contract CoffeeVault is ERC20, Ownable {
 
         UserInfo storage user = userInfo[msg.sender];
         user.shareTokens = user.shareTokens.sub(_shares);
+        if (user.shareTokens < 0) {
+            user.shareTokens = 0;
+        }
         user.initialLpTokens = user.initialLpTokens.sub(r);
+        if (user.initialLpTokens < 0) {
+            user.initialLpTokens = 0;
+        }
 
         token.safeTransfer(msg.sender, r);
     }
