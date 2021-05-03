@@ -22,10 +22,10 @@ contract CoffeeVault is ERC20, Ownable {
     using Address for address;
     using SafeMath for uint256;
 
-    // Info of each user.
+    // Info of each user, this is used to calculate a user's personal returns
     struct UserInfo {
-        uint256 shareTokens;     // need good commment
-        uint256 initialLpTokens; // need good commment
+        uint256 shareTokens;     // Amount of Vault Share tokens issued to the user
+        uint256 depositedLpTokens; // Amount of deposited LP tokens by the user
     }
 
     // Info of each user that stakes LP tokens.
@@ -117,9 +117,9 @@ contract CoffeeVault is ERC20, Ownable {
         uint256 _before = token.balanceOf(address(this));
         token.safeTransferFrom(msg.sender, address(this), _amount);
 
-        // store initla LP Tokens
+        // Keep track of the total amount of LP tokens a user has deposited
         UserInfo storage user = userInfo[msg.sender];
-        user.initialLpTokens = user.initialLpTokens.add(_amount);
+        user.depositedLpTokens = user.depositedLpTokens.add(_amount);
 
         uint256 _after = token.balanceOf(address(this));
         _amount = _after.sub(_before); // Additional check for deflationary tokens
@@ -131,7 +131,7 @@ contract CoffeeVault is ERC20, Ownable {
         }
         _mint(msg.sender, shares);
 
-        // store share token
+        // Update the user's share tokens
         user.shareTokens = user.shareTokens.add(shares);
 
         earn();
@@ -179,9 +179,9 @@ contract CoffeeVault is ERC20, Ownable {
         if (user.shareTokens < 0) {
             user.shareTokens = 0;
         }
-        user.initialLpTokens = user.initialLpTokens.sub(r);
-        if (user.initialLpTokens < 0) {
-            user.initialLpTokens = 0;
+        user.depositedLpTokens = user.depositedLpTokens.sub(r);
+        if (user.depositedLpTokens < 0) {
+            user.depositedLpTokens = 0;
         }
 
         token.safeTransfer(msg.sender, r);
@@ -195,7 +195,7 @@ contract CoffeeVault is ERC20, Ownable {
         stratCandidate = StratCandidate({ 
             implementation: _implementation,
             proposedTime: block.timestamp
-         });
+        });
 
         emit NewStratCandidate(_implementation);
     }
