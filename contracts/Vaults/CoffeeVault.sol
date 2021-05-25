@@ -188,6 +188,11 @@ contract CoffeeVault is ERC20, Ownable {
           user.depositedLpTokens = 0;
         }
 
+        // Incase of a withdrawal fee, we must set the depositedLpTokens to 0
+        if (user.shareTokens == 0) {
+          user.depositedLpTokens = 0;
+        }
+
         token.safeTransfer(msg.sender, r);
     }
 
