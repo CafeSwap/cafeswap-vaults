@@ -15,7 +15,8 @@ import "../interfaces/IUniswapV2Pair.sol";
 import "../interfaces/IMasterChef.sol";
 
 /**
- * @dev Strategy to farm RewardToken through a CafeSwap based MasterChef contract.
+ * @dev Strategy to farm RewardToken through a CafeSwap based MasterChef
+ * contract.
  */
 contract StrategyReward is Ownable, Pausable {
     using SafeERC20 for IERC20;
