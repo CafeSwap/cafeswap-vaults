@@ -98,7 +98,7 @@ contract StrategyBrewDoubleRouter is Ownable, Pausable {
      */
     constructor(
         address _vault,
-        address _strategist
+        address _strategist,
         address _burnerAddress
     ) public {
         vault = _vault;
@@ -172,7 +172,7 @@ contract StrategyBrewDoubleRouter is Ownable, Pausable {
     function chargeFees() internal {
         uint256 toWbnb = IERC20(want).balanceOf(address(this)).mul(35).div(1000);
         IUniswapRouterETH(unirouter).swapExactTokensForTokens(
-                toWbnb
+                toWbnb,
                 0,
                 wantToWbnbRoute,
                 address(this),
