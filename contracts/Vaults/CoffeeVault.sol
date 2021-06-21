@@ -22,15 +22,6 @@ contract CoffeeVault is ERC20, Ownable {
     using Address for address;
     using SafeMath for uint256;
 
-    // Info of each user, this is used to calculate a user's personal returns
-    struct UserInfo {
-        uint256 shareTokens;     // Amount of Vault Share tokens issued to the user
-        uint256 depositedLpTokens; // Amount of deposited LP tokens by the user
-    }
-
-    // Info of each user that stakes LP tokens.
-    mapping (address => UserInfo) public userInfo;
-
     struct StratCandidate {
         address implementation;
         uint proposedTime;
@@ -117,10 +108,6 @@ contract CoffeeVault is ERC20, Ownable {
         uint256 _before = token.balanceOf(address(this));
         token.safeTransferFrom(msg.sender, address(this), _amount);
 
-        // Keep track of the total amount of LP tokens a user has deposited
-        UserInfo storage user = userInfo[msg.sender];
-        user.depositedLpTokens = user.depositedLpTokens.add(_amount);
-
         uint256 _after = token.balanceOf(address(this));
         _amount = _after.sub(_before); // Additional check for deflationary tokens
         uint256 shares = 0;
@@ -130,9 +117,6 @@ contract CoffeeVault is ERC20, Ownable {
             shares = (_amount.mul(totalSupply())).div(_pool);
         }
         _mint(msg.sender, shares);
-
-        // Update the user's share tokens
-        user.shareTokens = user.shareTokens.add(shares);
 
         earn();
     }
@@ -172,16 +156,6 @@ contract CoffeeVault is ERC20, Ownable {
             if (_diff < _withdraw) {
                 r = b.add(_diff);
             }
-        }
-
-        UserInfo storage user = userInfo[msg.sender];
-        user.shareTokens = user.shareTokens.sub(_shares);
-        if (user.shareTokens < 0) {
-            user.shareTokens = 0;
-        }
-        user.depositedLpTokens = user.depositedLpTokens.sub(r);
-        if (user.depositedLpTokens < 0) {
-            user.depositedLpTokens = 0;
         }
 
         token.safeTransfer(msg.sender, r);
