@@ -192,7 +192,7 @@ contract StrategyCafeLP is Ownable, Pausable {
      * 5. It deposits the new LP tokens.
      */
     function harvest() external whenNotPaused {
-        require(!Address.isContract(msg.sender), "!contract");
+        require(msg.sender == tx.origin, "!contract");
         IMasterChef(masterchef).deposit(poolId, 0);
         chargeFees();
         addLiquidity();

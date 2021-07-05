@@ -145,7 +145,7 @@ contract StrategyBrew is Ownable, Pausable {
      * 4. It re-invests the remaining profits.
      */
     function harvest() external whenNotPaused {
-        require(!Address.isContract(msg.sender), "!contract");
+        require(msg.sender == tx.origin, "!contract");
         IMasterChef(masterchef).leaveStaking(0);
         chargeFees();
         deposit();
